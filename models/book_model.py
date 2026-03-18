@@ -3,8 +3,9 @@ class Book:
         self.id = id
         self.title = title
         self.author = author
-        self.state = state
         self.year_published = year_published
+        self.state = state
+        
 
     def __str__(self):
         return f"({self.id}) - {self.title} by {self.author} published in {self.year_published}. State: {self.state}"
