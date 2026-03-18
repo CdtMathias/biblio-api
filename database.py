@@ -123,8 +123,13 @@ def get_loan_by_id(id):
     return None
 
 def create_loan(member_id, book_id, date, return_date):
-    cursor.execute("INSERT INTO loans (member_id, book_id, date, return_date) VALUES (%s, %s, %s, %s) RETURNING id", (member_id, book_id, date, return_date))
-    conn.commit()
+    try:
+        cursor.execute("INSERT INTO loans (member_id, book_id, date, return_date) VALUES (%s, %s, %s, %s) RETURNING id", (member_id, book_id, date, return_date))
+        conn.commit()
+        return cursor.fetchone()[0]
+    except Exception:
+        conn.rollback()
+        raise    
 
 def update_loan(id, member_id, book_id, date, return_date, is_returned):
     try: 
