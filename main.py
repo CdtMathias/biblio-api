@@ -145,6 +145,9 @@ def get_loans_by_id(id: int, payload = Depends(verify_token)):
 def post_loans(loan: LoanSchema, payload = Depends(verify_token)):
     is_book = get_book_by_id(loan.book_id)
     is_member = get_member_by_id(loan.member_id)
+    print(f"is_book: {is_book}")
+    print(f"is_member: {is_member}")
+    print(f"is_book.state: {is_book.state if is_book else 'None'}")
     if is_book and is_member and is_book.state == "available":
         loan_id = create_loan(loan.member_id, loan.book_id, loan.date, loan.return_date)
         update_state_book(loan.book_id, "rented")
